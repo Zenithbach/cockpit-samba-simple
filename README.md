@@ -9,17 +9,17 @@ Built to be lightweight: a handful of files, no build step required, no framewor
 - 📋 List all configured Samba shares at a glance
 - ➕ Add / edit / delete shares through a simple form
 - 🛡️ **Safety first:** every change is backed up, written atomically, and validated with `testparm` *before* it goes live — a bad edit can never break your Samba
-- 🔁 One-click Samba restart after changes
-- 🪶 Minimal footprint — 4 files, no node\_modules
+- 🔁 One-click Samba restart after changes (handles both `smbd` and `smb` service names)
+- 🪶 Minimal footprint — 4 files, no node_modules
 
 ## Screenshots
 
-*(coming soon — add one once it's running on your server)*
+*(coming soon)*
 
 ## Requirements
 
 - Cockpit 186 or newer
-- Samba (`samba` package — `testparm` comes with `samba-common`)
+- Samba (`testparm` comes with `samba-common`)
 - Python 3
 
 ## Install

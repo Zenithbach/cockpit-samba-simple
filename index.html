@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Samba Shares</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../base1/cockpit.css" rel="stylesheet">
+    <script src="../base1/cockpit.js"></script>
+</head>
+<body class="pf-m-redhat-font">
+    <div class="ct-page-wrap" id="app">
+        <div class="ct-container">
+            <h2>Samba Shares</h2>
+
+            <table class="table ct-table" id="shares-table">
+                <thead>
+                    <tr>
+                        <th>Share name</th>
+                        <th>Path</th>
+                        <th>Valid users</th>
+                        <th>Read only</th>
+                        <th>Browseable</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="shares-body">
+                    <tr><td colspan="6">Loading&#8230;</td></tr>
+                </tbody>
+            </table>
+
+            <button class="pf-c-button pf-m-primary" id="btn-add">
+                Add share
+            </button>
+            <span id="status" class="pf-c-helper-text"></span>
+        </div>
+    </div>
+
+    <!-- Add / edit dialog -->
+    <dialog id="share-dialog">
+        <form id="share-form" class="pf-c-form">
+            <h3 id="dialog-title">Add share</h3>
+
+            <label class="pf-c-form__label" for="f-name">Share name</label>
+            <input class="pf-c-form-control" id="f-name" name="name" required
+                   pattern="[A-Za-z0-9._-]+" title="Letters, digits, dot, dash, underscore">
+
+            <label class="pf-c-form__label" for="f-path">Path</label>
+            <input class="pf-c-form-control" id="f-path" name="path" required placeholder="/srv/share">
+
+            <label class="pf-c-form__label" for="f-comment">Comment</label>
+            <input class="pf-c-form-control" id="f-comment" name="comment">
+
+            <label class="pf-c-form__label" for="f-users">Valid users (comma separated, blank = everyone)</label>
+            <input class="pf-c-form-control" id="f-users" name="users">
+
+            <label>
+                <input type="checkbox" id="f-readonly"> Read only
+            </label>
+            <label>
+                <input type="checkbox" id="f-browseable" checked> Browseable
+            </label>
+
+            <div class="pf-c-form__group" style="margin-top: 1em">
+                <button type="submit" class="pf-c-button pf-m-primary">Save</button>
+                <button type="button" class="pf-c-button pf-m-secondary" onclick="document.getElementById('share-dialog').close()">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="samba.js"></script>
+</body>
+</html>
