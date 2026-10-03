@@ -21,21 +21,43 @@ Built to be lightweight: a handful of files, no build step required, no framewor
 - Cockpit 186 or newer
 - Samba (`testparm` comes with `samba-common`)
 - Python 3
+- A Linux distro with systemd (for the service restart)
 
 ## Install
+
+```bash
+git clone https://github.com/Zenithbach/cockpit-samba-simple.git
+cd cockpit-samba-simple
+sudo make install
+```
+
+Then reload Cockpit in your browser (Ctrl+Shift+R). **Samba Shares** appears in the sidebar.
+
+Uninstall:
+
+```bash
+sudo make uninstall
+```
+
+### Manual install
+
+If you prefer not to use make:
 
 ```bash
 sudo mkdir -p /usr/share/cockpit/samba-simple
 sudo cp manifest.json index.html samba.js samba.py /usr/share/cockpit/samba-simple/
 ```
 
-Then reload Cockpit in your browser (Ctrl+Shift-R). **Samba Shares** appears in the sidebar under *Applications*.
+## How it works
 
-Uninstall:
+The plugin is a small Cockpit page (`index.html` + `samba.js`) that talks to a Python bridge (`samba.py`) via `cockpit.spawn`. The bridge is the only thing that touches `/etc/samba/smb.conf`:
 
-```bash
-sudo rm -rf /usr/share/cockpit/samba-simple
-```
+1. Backs up the current config to `/var/backups/cockpit-samba` (keeps the last 10)
+2. Writes the new config to a temp file
+3. Validates it with `testparm`
+4. Only then atomically replaces the live config (`os.replace`)
+
+If `testparm` rejects the change, the live config is never touched.
 
 ## Alternatives
 
